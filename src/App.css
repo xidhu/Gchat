@@ -1,0 +1,17 @@
+.app{
+  display: grid;
+  place-items: center;
+  background-image: url("./images/619.jpg");
+  height: 100vh;
+  
+}
+
+.app_body{
+  display: flex;
+  background-color: beige;
+  width: 90vw;
+  height: 90vh;
+  margin-top: 20px;
+  box-shadow: -1px 4px 20px -6px ;
+ 
+}

@@ -1,0 +1,57 @@
+
+
+.sidebar_chat_item {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    border-bottom: 1px solid #e6e6e6;
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;
+}
+.sidebar_chat_item:hover {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    border-bottom: 1px solid #ffffff;
+    background-color: #ececec;
+
+    
+    
+    
+}
+.sidebar_chat_item_info{
+    margin-left: 10px;
+    margin-top: 5px;
+    
+    
+    
+}
+.sidebar_chat_item_info > p {
+    color: gray;
+    font-size: small;
+}
+.sidebar_chat_items{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 1;
+    
+}
+.sidebar_chat_items > p{
+    color: gray;
+    font-size: small;
+    margin-left: 5px;
+    
+}
+
+.lnk{
+    text-decoration: none;
+    color: black;
+}
+
+.profile_pic{
+
+    border-radius: 50%;
+}
