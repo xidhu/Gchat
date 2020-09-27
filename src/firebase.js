@@ -16,6 +16,8 @@ import '@firebase/database';
 
 // import Cloud Firestore (optional)
 import '@firebase/firestore';
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyCCC1xR5Obq1DOwoqHbV3K4jaeq3P_BcIU",
   authDomain: "chat3-f8994.firebaseapp.com",
@@ -30,6 +32,7 @@ const firebaseConfig = {
 
  const db = firebaseApp.firestore();
  const auth = firebaseApp.auth();
+
  
  const provider = new firebase.auth.GoogleAuthProvider();
 

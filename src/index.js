@@ -4,7 +4,6 @@ import App from './App';
 import './PasswordReset.css'
 import {Button} from '@material-ui/core';
 import './index.css';
-import * as serviceWorker from './ServiceWorker';
 
 try{
   localStorage.getItem("");
@@ -35,5 +34,3 @@ catch(e){
 }
 
 
-
-serviceWorker.register();

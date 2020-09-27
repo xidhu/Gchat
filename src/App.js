@@ -2,8 +2,10 @@ import "./App.css";
 import Sidebar from "./Sidebar";
 import ChatBox from './ChatBox';
 import Login from './Login';
+import {sentVerification} from './Authentication';
 import PasswordReset from './PasswordReset'
 import {auth} from "./firebase";
+import {setProfile,clearProfile,getProfile} from './save';
 import {
     BrowserRouter as Router,
     Switch,
@@ -20,11 +22,20 @@ function App() {
     useEffect(()=>{
         auth.onAuthStateChanged(function (user) {
             if (user) {
-                window.user = user;
-                setSignIn(true);
-            } else {
-                window.user = null;
+                
+                if(user.emailVerified){
+                    clearProfile();
+                    setProfile(user);
+                    setSignIn(true);
+                    
+                }
+                
+            } 
+            
+            else {
+               
                 setSignIn(false);
+                clearProfile();
             }
           });
     },[isSignIn]);

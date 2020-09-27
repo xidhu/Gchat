@@ -20,10 +20,12 @@ class SignUp extends Component{
         email:"",
         password:"",
         isSignUp:false,
+        name : "",
       };
     }
 
     hasChanged = (e) => {
+
       
       if(e.placeholder === "Email"){
         this.setState({val_email : false});
@@ -68,25 +70,33 @@ class SignUp extends Component{
             this.setState({pass_con_err : false});
           }
       }
+      else if(e.placeholder === "Name"){
+          this.setState({name:e.value});
+      }
       
     }
 
     signUpPressed = () =>{
 
-      if(this.state.val_email){
-        if(this.state.val_pass_con){
-          signUpWithEmail(this.state.email,this.state.password);
-          this.setState({isSignUp:true});
+      if(this.state.name !== ""){
+        if(this.state.val_email){
+          if(this.state.val_pass_con){
+            signUpWithEmail(this.state.email,this.state.password,this.state.name);
+            this.setState({isSignUp:true});
+          }
+          else if(this.state.val_pass === false){
+            alert("Password Should contain Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
+          }
+          else if(this.state.val_pass_con === false){
+            alert("Password do not match..!");
+          }
         }
-        else if(this.state.val_pass === false){
-          alert("Password Should contain Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
-        }
-        else if(this.state.val_pass_con === false){
-          alert("Password do not match..!");
+        else{
+          alert("Enter Valid Email..!");
         }
       }
       else{
-        alert("Enter Valid Email..!");
+          alert("Enter Your Name..!");
       }
 
     }
@@ -106,6 +116,7 @@ class SignUp extends Component{
     
               <div className="signup_input_fields">
               <p className="signup_chat_text">SignUp</p>
+                <Input  onChange={(e) => this.hasChanged(e.target)} className="signup_input" placeholder="Name" type="text" />
                 <Input error={this.state.em_err} onChange={(e) => this.hasChanged(e.target)} className="signup_input" placeholder="Email" type="email" />
                 <Input error={this.state.pass_err} onChange={(e) => this.hasChanged(e.target)} className="signup_input" placeholder="Password" type="password"/> 
                 <Input error={this.state.pass_con_err} onChange={(e) => this.hasChanged(e.target)} className="signup_input" placeholder="Confirm password" type="password"/> 

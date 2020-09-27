@@ -1,14 +1,20 @@
-import {auth} from "./firebase";
+import {auth,db} from "./firebase";
 
-async function signUpWithEmail(email,password){
+async function signUpWithEmail(email,password,name){
 
+        
         try{
             await auth.createUserWithEmailAndPassword(email, password).then(
-                (result) =>{
-                    
-                    sentVerification();
-                    
+                (res) =>{
+                    res.user.updateProfile(
+                        {
+                            displayName : name,
 
+                        }
+                    );
+                    sentVerification();
+                    window.email = email;
+                    
                     
                 }
             ).catch(function(error) {
@@ -16,7 +22,6 @@ async function signUpWithEmail(email,password){
                 alert(error);
     
           });
-
         }
         catch(e){
             alert("Error Occured...!Try Again Later");
@@ -30,7 +35,7 @@ async function sentVerification(){
                 .then(function () {
                     alert("Verification is sent on your Email...!");
                 }).catch(function (error) {
-                    alert("Verification is not sent..try again...!");
+                   
                 });
 
     }
@@ -70,6 +75,7 @@ async function signInWithEmail(email,password){
             }
             else{
                 alert("Please Verify Your Email..!");
+                location.reload();
             }
             
             

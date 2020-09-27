@@ -77,9 +77,11 @@ class Login extends React.Component{
     return !this.state.isSignIn ?(
       <div className="login">
           <div className="login_body">
-              <p className="chat_text">GChat</p>
-              <p className="login_text">Login</p>
+              
+              
               <div className="input_fields">
+                <p className="chat_text">GChat</p>
+                <p className="login_text">Login</p>
                 <Input className="login_input" type="email" placeholder="Email" onChange={(e) => {this.hasChanged(e.target)}} error={this.state.em_err}/>
                 <Input className="login_input" type="password" placeholder="Password" onChange={(e) => {this.hasChanged(e.target)}} error={this.state.pass_err}/> 
                 <Button className="login_button" onClick={this.loginClicked}>Login</Button>

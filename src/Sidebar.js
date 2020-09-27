@@ -4,6 +4,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { IconButton,Menu,MenuItem} from '@material-ui/core';
 import {SearchOutlined} from '@material-ui/icons';
 import {signOut} from "./Authentication";
+import {db} from "./firebase";
+import {getProfile,clearProfile} from './save';
 
 
 class Sidebar extends React.Component {
@@ -11,8 +13,13 @@ class Sidebar extends React.Component {
 
   constructor(){
     super();
+    this.user = getProfile();
+   
+    
     
   }
+
+  
 
 
 
@@ -55,7 +62,7 @@ const Options = () => {
   const handleClose = (e) => {
     if(e.id === "logout"){
         signOut();
-        localStorage.clear();
+        clearProfile();
         
     }
     setAnchorEl(null);
