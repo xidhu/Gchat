@@ -4,15 +4,14 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { IconButton,Menu,MenuItem} from '@material-ui/core';
 import {SearchOutlined} from '@material-ui/icons';
 import {signOut} from "./Authentication";
-import {getProfile} from "./save";
+
 
 class Sidebar extends React.Component {
 
 
   constructor(){
     super();
-    this.user = getProfile();
-    alert(this.user.name);
+    
   }
 
 
@@ -49,7 +48,6 @@ class Sidebar extends React.Component {
 
 const Options = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -57,6 +55,8 @@ const Options = () => {
   const handleClose = (e) => {
     if(e.id === "logout"){
         signOut();
+        localStorage.clear();
+        
     }
     setAnchorEl(null);
   };

@@ -1,5 +1,4 @@
 import {auth} from "./firebase";
-import {setProfile,eraseProfile} from "./save";
 
 async function signUpWithEmail(email,password){
 
@@ -8,7 +7,7 @@ async function signUpWithEmail(email,password){
                 (result) =>{
                     
                     sentVerification();
-                    setProfile(result);
+                    
 
                     
                 }
@@ -23,6 +22,8 @@ async function signUpWithEmail(email,password){
             alert("Error Occured...!Try Again Later");
         }
 }
+
+
 async function sentVerification(){
     try{
         await auth.currentUser.sendEmailVerification()
@@ -62,8 +63,9 @@ async function signInWithEmail(email,password){
         await auth.signInWithEmailAndPassword(email,password)
         .then((result) => {
 
-            setProfile(result);
+           
             if(result.user.emailVerified){
+                
                 location.reload();
             }
             else{
@@ -90,7 +92,7 @@ async function signOut(){
     try{
         await auth.signOut()
             .then(function () {
-                eraseProfile();
+               
                 alert("Successfully Logged Out");
                 location.reload();
             }).catch(function (error) {
@@ -101,5 +103,7 @@ async function signOut(){
         alert("Error Occured...!Try Again Later");
     }
 }
+
+
 
 export {signUpWithEmail,signInWithEmail,sentVerification,signOut,resetPassword};

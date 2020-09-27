@@ -10,6 +10,7 @@ import MicIcon from '@material-ui/icons/Mic';
 import SendIcon from '@material-ui/icons/Send';
 function ChatBox() {
 
+
         return (
             <div className="ChatBox">
                 <div className="chat_bar">
@@ -50,8 +51,8 @@ function ChatBox() {
                 <IconButton>
                     <InsertEmoticonIcon style={{color:"#c4c4c4"}}/>
                 </IconButton>
-                    <form className="send">
-                        <input  id="chatbox" type="text"   name="" />
+                    <div className="sent">
+                        <input  id="chatbox" type="text" />
                         
                         
                         <IconButton >
@@ -60,7 +61,7 @@ function ChatBox() {
                         
                         
                     
-                    </form>
+                    </div>
                     
                     <IconButton>
                     <MicIcon style={{color:"#c4c4c4"}}/>
