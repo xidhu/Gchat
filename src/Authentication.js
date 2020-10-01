@@ -1,4 +1,5 @@
-import {auth,db} from "./firebase";
+import {auth} from "./firebase";
+import db from './firebase';
 
 async function signUpWithEmail(email,password,name){
 
@@ -64,17 +65,19 @@ async function resetPassword(email){
 }
 async function signInWithEmail(email,password){
 
+
     try{
         await auth.signInWithEmailAndPassword(email,password)
-        .then((result) => {
+        .then((res) => {
 
            
-            if(result.user.emailVerified){
-                
+            if(res.user.emailVerified){
+
                 location.reload();
             }
             else{
                 alert("Please Verify Your Email..!");
+                sentVerification();
                 location.reload();
             }
             
@@ -86,6 +89,8 @@ async function signInWithEmail(email,password){
                 
     
           });
+      
+  
 
     }
     catch(e){
@@ -110,6 +115,20 @@ async function signOut(){
     }
 }
 
+async function userExists(user){
+    let a = false;
+    await db
+    .collection("users")
+    .doc(user.uid)
+    .get().then(doc =>{
+        if(doc.exists){
+            a = true;
+        }
+    });
+
+    return a;
+}
 
 
-export {signUpWithEmail,signInWithEmail,sentVerification,signOut,resetPassword};
+
+export {userExists,signUpWithEmail,signInWithEmail,sentVerification,signOut,resetPassword};

@@ -1,82 +1,93 @@
-import "./App.css";
-import Sidebar from "./Sidebar";
-import ChatBox from './ChatBox';
 import Login from './Login';
-import {sentVerification} from './Authentication';
+import "./App.css";
 import PasswordReset from './PasswordReset'
 import {auth} from "./firebase";
-import {setProfile,clearProfile,getProfile} from './save';
+import { CircularProgress } from '@material-ui/core';
+import {setProfile,clearProfile} from './save';
 import {
     BrowserRouter as Router,
     Switch,
-    Route, 
+    Route,
   } from "react-router-dom";
 import React,{useEffect, useState} from "react";
 import SignUp from "./SignUp";
+import {userExists} from "./Authentication";
+import ChatPage from './ChatPage';
 
 function App() {
 
 
-    const [isSignIn,setSignIn] = useState(false);
+    const [isSignIn,setSignIn] = useState("0");
+    const [online,setOnline] = useState(true);
 
     useEffect(()=>{
         auth.onAuthStateChanged(function (user) {
             if (user) {
                 
                 if(user.emailVerified){
-                    clearProfile();
-                    setProfile(user);
-                    setSignIn(true);
+                    if(userExists(user)){
+                        clearProfile();
+                        setProfile(user);
+                        setSignIn("1");
+                    }
                     
+                    
+                    
+                }
+                else{
+                    
+                    setSignIn("2");
                 }
                 
             } 
             
             else {
                
-                setSignIn(false);
+                setSignIn("2");
                 clearProfile();
             }
           });
     },[isSignIn]);
 
-
     
 
       
-        return isSignIn ? (
-            <div className="app">
-            <div className="app_body">
+        if(online){
+            return isSignIn === "1" ? (
+                <ChatPage/>
+            ):isSignIn === "2"?
+            (
                 <Router>
-                <Switch>
-                    <Route exact path="/">
-                        <Sidebar/>
-                        <ChatBox/>
-                    </Route>
-                </Switch>
-                
+                    <Switch>
+                        <Route path="/signup">
+                            <SignUp/>
+                        </Route>
+                    </Switch>
+                    <Switch>
+                        <Route path="/forgot">
+                            <PasswordReset/>
+                        </Route>
+                    </Switch>
+                    <Switch>
+                        <Route exact path="/">
+                            <Login/>
+                        </Route>
+                    </Switch>
                 </Router>
-               </div>
-            </div>
-        ):(
-            <Router>
-                <Switch>
-                    <Route path="/signup">
-                        <SignUp/>
-                    </Route>
-                </Switch>
-                <Switch>
-                    <Route path="/forgot">
-                        <PasswordReset/>
-                    </Route>
-                </Switch>
-                <Switch>
-                    <Route exact path="/">
-                        <Login/>
-                    </Route>
-                </Switch>
-            </Router>
-        );
+            ):(
+                <div className="app">
+                <div className="app_body">
+                    <div>
+                        <CircularProgress color="secondary"  size={80} className="progress"/>
+                    </div>
+                        
+                   </div>
+                </div>
+            );
+        }
+        else{
+            location.reload();
+        }
     
     
     

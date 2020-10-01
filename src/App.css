@@ -1,17 +1,30 @@
 .app{
   display: grid;
   place-items: center;
-  background-image: url("./images/619.jpg");
+  background-image: url("./images/3893871.jpg");
   height: 100vh;
+  background-size: cover;
   
 }
 
 .app_body{
   display: flex;
-  background-color: beige;
+  background-color:skyblue;
   width: 90vw;
   height: 90vh;
   margin-top: 20px;
   box-shadow: -1px 4px 20px -6px ;
  
+}
+
+.progress{
+  margin-left: 40vw;
+  margin-top: 40vh;
+}
+
+.bg{
+
+  flex: auto;
+ background-image: url("./images/619.jpg");
+ background-size: cover;
 }
