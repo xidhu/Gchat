@@ -69,7 +69,7 @@ function ChatBox() {
                             {
                                 name : user.name,
                                 message : textFieldText,
-                               asda
+                               
                             }
                         ]
                     },{merge : true});
