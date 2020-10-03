@@ -17,6 +17,8 @@ import '@firebase/database';
 // import Cloud Firestore (optional)
 import '@firebase/firestore';
 
+import * as admin from 'firebase-admin';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCCC1xR5Obq1DOwoqHbV3K4jaeq3P_BcIU",

@@ -15,7 +15,6 @@
     margin-right: 0;
     background-color: #ededed;
     justify-content: space-between;
-    background-clip: border-box;
     align-items: center;
     padding-right: 2vw;
     padding-left: 2vw;
@@ -41,23 +40,34 @@
     
     flex:0.9;
     padding: 30px;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow: hidden;
+    
+    
    
 }
+.msg{
+    margin-left: auto;
+  margin-right: auto;
+  white-space: pre-line;
+  word-wrap: break-word;
+}
 .chat_massage{
+    max-width: 30vw;
     position: relative;
     font-size: 16px;
     padding: 10px;
-    background-color: white;
+    background-color: #f1f3f8;
     border-radius: 10px;
     width: fit-content;
     margin-bottom: 30px;
 
 }
 
+
 .chat_name{
     position: absolute;
-    top: -15px;
+    top: -18px;
     font-size: smaller;
     font-weight: 700;
     
@@ -65,12 +75,20 @@
 .chat_time{
     font-size: x-small;
     margin-left: 10px;
-    
-
+    margin-top: 15px;
+    float: right;
 }
 
+
 .chat_reciever{
-    background-color: #dbf5c6;
+    max-width: 30vw;
+    position: relative;
+    font-size: 16px;
+    padding: 10px;
+    background-color: #d6e0f0;
+    border-radius: 10px;
+    width: fit-content;
+    margin-bottom: 30px;
     margin-left: auto;
 
 }

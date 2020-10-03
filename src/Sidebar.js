@@ -6,6 +6,7 @@ import {SearchOutlined} from '@material-ui/icons';
 import {signOut} from "./Authentication";
 import db from "./firebase";
 import {getProfile,clearProfile} from './save';
+import SidebarChat from "./SidebarChat";
 
 
 class Sidebar extends React.Component {
@@ -13,31 +14,120 @@ class Sidebar extends React.Component {
 
   constructor(){
     super();
+    this.state = {
 
-    this.user = getProfile();
+      user : getProfile(),
+      users : null,
+      chats : null,
+      items : null,
+
+    }
     this.initUser();
-    this.users = [];
-    this.chats = [];
+  }
+
+  searchChanged = (e) => {
+    var strSearch = e.target.value;
+    var strlength = strSearch.length;
+    var strFrontCode = strSearch.slice(0, strlength-1);
+    var strEndCode = strSearch.slice(strlength-1, strSearch.length);
+    var startcode = strSearch;
+    var endcode= strFrontCode + String.fromCharCode(strEndCode.charCodeAt(0) + 1);
+    if(e.target.value === ""){
+      this.setState(
+        {
+          items: null,
+        }
+      )
+      
+    }
+    else if(this.state.users !== null){
+     
+      var find = false;
+      this.setState(
+        {
+          items : this.state.users.map(user => {
+            if(user.name >= startcode && user.name < endcode){
+                find = true;
+                return user;
+            }
+                
+        }),
+        }
+      )
+      if(!find){
+        console.log("not found..!")
+        db.collection("users")
+      .where('name', '>=', startcode)
+      .where('name', '<', endcode)
+      .onSnapshot((snapshot) => {
+      this.setState(
+        {
+          users : snapshot.docs.map((doc) => {
+            if(doc.data().uid !== this.state.user.uid){
+              return doc.data();
+            }
+        }
+      ),
+          
+        }
+      );
+      this.setState({
+        items : this.state.users,
+      }
+      )
+      }
+      );
+      }
+    }
+    else{
+      db.collection("users")
+      .where('name', '>=', startcode)
+      .where('name', '<', endcode)
+      .onSnapshot((snapshot) => {
+      this.setState(
+        {
+          users : snapshot.docs.map((doc) => {
+            if(doc.data().uid !== this.state.user.uid){
+              return doc.data();
+            }
+        }
+      ),
+          
+        }
+      );
+      this.setState({
+        items : this.state.users,
+      }
+      )
+      }
+      );
+    }
     
   }
+      
+    
 
-  componentDidMount(){
-    this.setState(this.user,() => {
-      this.user.name = "Hello";
-    })
-  }
-  async initUser(){
-    await db
+  
+  initUser(){
+    db
+    .collection("users")
+    .doc(this.state.user.uid)
+    .onSnapshot((snapshot) => {
+        if(!snapshot.exists){
+          db
             .collection("users")
-            .doc(this.user.uid)
+            .doc(this.state.user.uid)
             .set({
-                uid : this.user.uid,
-                name:this.user.name,
-                email:this.user.email,
-                photo : this.user.photo,
+                uid : this.state.user.uid,
+                name:this.state.user.name,
+                email:this.state.user.email,
+                photo : this.state.user.photo,
                 state: "loggedIn",
-                online : false,
+                online : true,
             },{merge : true});
+        }
+    });
+     
   }
   Options = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -49,12 +139,12 @@ class Sidebar extends React.Component {
       if(e.id === "logout"){
          db
         .collection("users")
-        .doc(this.user.uid)
+        .doc(this.state.user.uid)
         .set({
-            uid : this.user.uid,
-            name:this.user.name,
-            email:this.user.email,
-            photo : this.user.photo,
+            uid : this.state.user.uid,
+            name:this.state.user.name,
+            email:this.state.user.email,
+            photo : this.state.user.photo,
             state: "loggedOut"
         },{merge : true});
           signOut();
@@ -92,7 +182,7 @@ class Sidebar extends React.Component {
       <div className="sidebar">
           <div className="sidebar_header">
               <img className="profile_pic"  width="50px" height="50px" src={"https://eshendetesia.com/images/user-profile.png"}/>
-              <h2>{this.user.name !== null ?this.user.name:"Name"}</h2>
+              <h2>{this.state.user.name !== null ?this.state.user.name:"Name"}</h2>
               <div className="sidebar_headerRight">
                   {<this.Options/>}
                   
@@ -102,15 +192,21 @@ class Sidebar extends React.Component {
           <div className="sidebar_search">
               <div className="sidebar_search_container">
                 <SearchOutlined/>
-                <input id="search" placeholder="Search Here" type="text" onChange={(e) => {this.user.name = "hello"}} />
+                <input id="search" placeholder="Search Here" type="text" onChange={this.searchChanged} />
 
       
               </div>
          
           </div>
           <div className="sidebar_chat">
-            
-
+            {this.state.items !== null ?
+            this.state.items.map(
+              (user) => {
+                if(user != null){
+                  return <SidebarChat key={user.uid} name={user.name} url={user.photo} online={user.online} uid={user.uid}/>;
+                }
+              }
+            ):<div/>}
           </div>
       </div>
   );
