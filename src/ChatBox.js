@@ -10,6 +10,7 @@ import MicIcon from '@material-ui/icons/Mic';
 import SendIcon from '@material-ui/icons/Send';
 import db from "./firebase";
 import ChatMassege from './ChatMessage';
+import { animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
 import {
     useParams
   } from "react-router-dom";
@@ -27,10 +28,12 @@ function ChatBox() {
         chat ? db.collection("chats").doc(chat.chatId)
         .collection("chats").orderBy("time"):null,{snapshotListenOptions:{includeMetadataChanges:true}}
     )
+   
 
     const [reciever,load,err] = useDocumentDataOnce(db
         .doc("users/"+uid),)
-   
+        
+
      useEffect(()=>{
         db
         .collection("chats")
@@ -38,6 +41,7 @@ function ChatBox() {
         .onSnapshot((snap) => {
             if(snap.exists){
                 setChat(snap.data());
+              
             }
             else{
                 db
@@ -46,13 +50,17 @@ function ChatBox() {
         .onSnapshot((snapshot) => {
             if(snapshot.exists){
                 setChat(snapshot.data());
+                
             }
         })
             }
         })
         
      },[chat])
+     
 
+
+  
    
      
      
@@ -116,7 +124,7 @@ function ChatBox() {
                        
                     </div>
                     </div>
-                <div className="chat_body" scroll="no">
+                <div className="chat_body" id="srl">
                     {
                       chats?
                         chats.docs.map((e,i) => (

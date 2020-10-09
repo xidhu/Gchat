@@ -1,3 +1,4 @@
+
 .ChatBox{
     overflow-x: visible;
     overflow-y: hidden;
@@ -38,7 +39,9 @@
 }
 .chat_body{
     
+    display: flex;
     flex:0.9;
+    flex-direction: column-reverse;
     padding: 30px;
     overflow-y: scroll;
     overflow-x: hidden;
