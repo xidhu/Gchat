@@ -126,6 +126,15 @@ class Sidebar extends React.Component {
                 online : true,
             },{merge : true});
         }
+        else{
+          db
+            .collection("users")
+            .doc(this.state.user.uid)
+            .set({
+                state: "loggedIn",
+                online : true,
+            },{merge : true});
+        }
     });
      
   }
@@ -145,7 +154,8 @@ class Sidebar extends React.Component {
             name:this.state.user.name,
             email:this.state.user.email,
             photo : this.state.user.photo,
-            state: "loggedOut"
+            state: "loggedOut",
+            online : false,
         },{merge : true});
           signOut();
           clearProfile();

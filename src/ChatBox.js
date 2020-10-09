@@ -14,69 +14,78 @@ import {
     useParams
   } from "react-router-dom";
 import { getProfile } from './save';
+import { useCollection,useDocumentDataOnce} from 'react-firebase-hooks/firestore';
 function ChatBox() {
-
      let user = getProfile();
      let {uid} = useParams();
      uid = uid.split("_");
-
      uid[0] === user.uid ? uid = uid[1]:uid = uid[0];
-     const [reciever,getReciever] = useState(null);
      const [textFieldText,setText] = useState("");
      const [chat,setChat] = useState(null);
+     const [chats,loading,error] = useCollection(
+         
+        chat ? db.collection("chats").doc(chat.chatId)
+        .collection("chats").orderBy("time"):null,{snapshotListenOptions:{includeMetadataChanges:true}}
+    )
 
-     useEffect(() => {
-         
-            db
-                .doc("users/"+uid)
-                .get()
-                .then(function (doc) {
-                    getReciever({
-                        uid : doc.data().uid,
-                        name : doc.data().name,
-                        online : doc.data().online,
-                    })
-                })
-                .catch(function (error) {
-            
-                })
-         
-     },[reciever]);
+    const [reciever,load,err] = useDocumentDataOnce(db
+        .doc("users/"+uid),)
+   
      useEffect(()=>{
-         db
-         .collection("chats")
-         .doc(uid+"_"+user.uid)
-         .get().then((doc) => {
-            setChat(doc.data());
-         }).catch((err) =>{
-            db
-            .collection("chats")
-            .doc(user.uid+"_"+uid)
-            .get().then((doc) => {
-                setChat(doc.data());
-         })
-         });
-     },[chat]);
+        db
+        .collection("chats")
+        .doc(uid+"_"+user.uid)
+        .onSnapshot((snap) => {
+            if(snap.exists){
+                setChat(snap.data());
+            }
+            else{
+                db
+        .collection("chats")
+        .doc(user.uid+"_"+uid)
+        .onSnapshot((snapshot) => {
+            if(snapshot.exists){
+                setChat(snapshot.data());
+            }
+        })
+            }
+        })
+        
+     },[chat])
 
+   
+     
+     
+   
+     
      const sentClicked = () => {
         if(textFieldText !== ""){
-            if(chat !== null){
+            if(chat === null){
                 db
                     .doc("chats/"+user.uid+"_"+uid)
                     .set({
                         chatId : user.uid+"_"+uid,
-                        chat : [
-                            {
-                                name : user.name,
-                                message : textFieldText,
-                               
-                            }
-                        ]
                     },{merge : true});
+                db.collection("chats").doc(user.uid+"_"+uid)
+                .collection("chats").add({
+                    name : user.name,
+                    message : textFieldText,
+                    time : new Date().toLocaleString("en-US"),
+                })
+            }
+            else{
+                db.collection("chats").doc(chat.chatId)
+                .collection("chats").add({
+                    name : user.name,
+                    message : textFieldText,
+                    time : new Date().toLocaleString("en-US"),
+                })
+                
             }
         }
         setText("");
      }
+
      const changeText = (e) => {
         setText(e.target.value);
         
@@ -89,8 +98,8 @@ function ChatBox() {
                         <div className="chat_bar_det">
                         <AccountCircleIcon style={{fontSize:"42px",color:"#c4c4c4"}}/>
                         <div className="chat_bar_details">
-                        <h3>{reciever !== null ?reciever.name:"User"}</h3>
-                        <p>{reciever !==null ? reciever.online?"Online":"Offline":"Offline"}</p>
+                        <h3>{reciever?reciever.name:"User"}</h3>
+                        <p>{reciever? reciever.online?"Online":"Offline":"Offline"}</p>
                         </div>
                         </div>
                     
@@ -108,10 +117,20 @@ function ChatBox() {
                     </div>
                     </div>
                 <div className="chat_body" scroll="no">
-                    <ChatMassege name={"Sasi"} 
-                    you={false} 
-                    message={"hfhzsdhsadashgdhgggjgjkgjkkgasjkfagshdfhsadhj"}
-                    time={"05:00 PM"}/>
+                    {
+                      chats?
+                        chats.docs.map((e,i) => (
+                            <ChatMassege 
+                            key={i}
+                            name={e.data().name}
+                            you={e.data().name === user.name ? true:false} 
+                            message={e.data().message}
+                            time={e.data().time.split(",")[1]}/>
+                          ))
+                      
+                      :<div/>
+                    } 
+                    
                 </div>
                 <div className="chat_footer">
                 <IconButton>

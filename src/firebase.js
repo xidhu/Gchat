@@ -17,7 +17,6 @@ import '@firebase/database';
 // import Cloud Firestore (optional)
 import '@firebase/firestore';
 
-import * as admin from 'firebase-admin';
 
 
 const firebaseConfig = {

@@ -15,14 +15,11 @@ class SidebarChat extends React.Component {
     }
 
   }
-
-  
-  
   render(){
     return(
      
       <Link to={"/chats/"+this.props.uid+"_"+this.state.user.uid} className="lnk">
-      <div className="sidebar_chat_item" onClick={this.onSelect}>
+      <div className="sidebar_chat_item">
           
           
           <img className="profile_pic" src={this.props.url !== null ? this.props.url:"https://eshendetesia.com/images/user-profile.png"} width="50px" height="50px" />
