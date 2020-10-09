@@ -18,13 +18,51 @@ class Sidebar extends React.Component {
 
       user : getProfile(),
       users : null,
-      chats : null,
       items : null,
 
     }
     this.initUser();
+    this.findChats();
   }
 
+  findChats = () =>{
+    db
+      .collection("chats")
+      .onSnapshot((snap) => {
+        snap.docs.forEach((d) => {
+          let ChatId = d.data().chatId.split("_");
+          if(ChatId[0] === this.state.user.uid){
+             db
+                 .doc("users/"+ChatId[1])
+                 .onSnapshot(snapshot => {
+                  let a = this.state.items ?this.state.items :[] ;
+                  a.push(snapshot.data())
+                  this.setState({
+                   
+                    items : a,
+                  }
+                  )
+                  
+                 })
+          }
+          if(ChatId[1] === this.state.user.uid){
+                 db
+                 .doc("users/"+ChatId[0])
+                 .onSnapshot(snapshot => {
+                  let a = this.state.items ?this.state.items :[] ;
+                  a.push(snapshot.data())
+                  this.setState({
+                   
+                    items : a,
+                  }
+                  )
+                  
+                 })
+        }
+        })
+      })
+      
+  }
   searchChanged = (e) => {
     var strSearch = e.target.value;
     var strlength = strSearch.length;
@@ -33,12 +71,13 @@ class Sidebar extends React.Component {
     var startcode = strSearch;
     var endcode= strFrontCode + String.fromCharCode(strEndCode.charCodeAt(0) + 1);
     if(e.target.value === ""){
-      this.setState(
-        {
-          items: null,
-        }
-      )
-      
+      this.setState({
+        
+        items:null,
+      })
+        
+      this.findChats();
+    
     }
     else if(this.state.users !== null){
      
@@ -55,7 +94,7 @@ class Sidebar extends React.Component {
         }
       )
       if(!find){
-        console.log("not found..!")
+       
         db.collection("users")
       .where('name', '>=', startcode)
       .where('name', '<', endcode)
@@ -211,9 +250,9 @@ class Sidebar extends React.Component {
           <div className="sidebar_chat">
             {this.state.items !== null ?
             this.state.items.map(
-              (user) => {
+              (user,index) => {
                 if(user != null){
-                  return <SidebarChat key={user.uid} name={user.name} url={user.photo} online={user.online} uid={user.uid}/>;
+                  return <SidebarChat key={index} name={user.name} url={user.photo} online={user.online} uid={user.uid}/>;
                 }
               }
             ):<div/>}
