@@ -15,62 +15,46 @@ import {
     useParams
   } from "react-router-dom";
 import { getProfile } from './save';
-import { useCollection,useDocumentDataOnce} from 'react-firebase-hooks/firestore';
-function ChatBox() {
+import { useCollectionData,useDocumentData} from 'react-firebase-hooks/firestore';
+const ChatBox=()=> {
      let user = getProfile();
      let {uid} = useParams();
      uid = uid.split("_");
      uid[0] === user.uid ? uid = uid[1]:uid = uid[0];
      const [textFieldText,setText] = useState("");
-     const [chat,setChat] = useState(null);
-     const [chats,loading,error] = useCollection(
+     let chat = null;
+     const [reciever,load,err] = useDocumentData(db
+        .doc("users/"+uid),)
+
+     if(user.uid < uid){
+         const [chate] = useDocumentData(
+                db
+            .doc("chats/"+uid+"_"+user.uid)
+            )
+        chat = chate;
+            
+    }
+    else{
+        const [chate] = useDocumentData(
+            db
+        .doc("chats/"+user.uid+"_"+uid)
+        )
+        chat = chate;
+    }
+    
+     const [chats,loading,error] = useCollectionData(
          
         chat ? db.collection("chats").doc(chat.chatId)
-        .collection("chats").orderBy("time"):null,{snapshotListenOptions:{includeMetadataChanges:true}}
+        .collection("chats").orderBy("time","desc").limit(100):null,{snapshotListenOptions:{includeMetadataChanges:true}}
     )
    
 
-    const [reciever,load,err] = useDocumentDataOnce(db
-        .doc("users/"+uid),)
-        
-
-     useEffect(()=>{
-        db
-        .collection("chats")
-        .doc(uid+"_"+user.uid)
-        .onSnapshot((snap) => {
-            if(snap.exists){
-                setChat(snap.data());
-              
-            }
-            else{
-                db
-        .collection("chats")
-        .doc(user.uid+"_"+uid)
-        .onSnapshot((snapshot) => {
-            if(snapshot.exists){
-                setChat(snapshot.data());
-                
-            }
-        })
-            }
-        })
-        
-     },[chat])
-     
-
-
-  
-   
-     
-     
-   
-     
      const sentClicked = () => {
         if(textFieldText !== ""){
-            if(chat === null){
+            if(!chats){
+                let chatId = user.uid > uid ?user.uid+"_"+uid:uid+"_"+user.uid;
                 db
-                    .doc("chats/"+user.uid+"_"+uid)
+                    .doc("chats/"+chatId)
                     .set({
                         chatId : user.uid+"_"+uid,
                     },{merge : true});
@@ -96,7 +80,6 @@ function ChatBox() {
 
      const changeText = (e) => {
         setText(e.target.value);
-        
      }
 
 
@@ -127,14 +110,16 @@ function ChatBox() {
                 <div className="chat_body" id="srl">
                     {
                       chats?
-                        chats.docs.map((e,i) => (
-                            <ChatMassege 
+                        chats.map((e,i) => {
+                           if(e){
+                            return <ChatMassege 
                             key={i}
-                            name={e.data().name}
-                            you={e.data().name === user.name ? true:false} 
-                            message={e.data().message}
-                            time={e.data().time.split(",")[1]}/>
-                          ))
+                            name={e.name}
+                            you={e.name === user.name ? true:false} 
+                            message={e.message}
+                            time={e.time.split(",")[1]}/>
+                           }
+                        })
                       
                       :<div/>
                     } 

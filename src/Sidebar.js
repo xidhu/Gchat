@@ -45,7 +45,7 @@ class Sidebar extends React.Component {
                   
                  })
           }
-          if(ChatId[1] === this.state.user.uid){
+          else if(ChatId[1] === this.state.user.uid){
                  db
                  .doc("users/"+ChatId[0])
                  .onSnapshot(snapshot => {
@@ -203,6 +203,7 @@ class Sidebar extends React.Component {
       setAnchorEl(null);
     };
   
+    
     return (
       <div>
         <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
@@ -221,9 +222,41 @@ class Sidebar extends React.Component {
     );
   
     }
-
-
-
+  
+    Items = () =>{
+      
+      {   let items = this.state.items;
+          if(this.state.items !== null){
+          const result = [];
+          for (let i = 0; i < items.length; i++) {
+            let exists = false;
+            for (let j = 0; j < result.length; j++) {
+              if(items[i]){
+                if (items[i].uid === result[j].uid) {
+                  exists = true;
+                  break;
+                }
+              }
+            }
+            if (!exists) {
+              result.push(items[i]);
+            }
+          }
+          items = result;
+        
+          }
+          return items !== null ?
+          items.map(
+            (user,index) => {
+              if(user != null){
+                
+                return <SidebarChat key={index} name={user.name} url={user.photo} online={user.online} uid={user.uid}/>;
+              }
+            }
+          ):<div/>
+        }
+      }
+    
 
   render(){
     
@@ -248,14 +281,7 @@ class Sidebar extends React.Component {
          
           </div>
           <div className="sidebar_chat">
-            {this.state.items !== null ?
-            this.state.items.map(
-              (user,index) => {
-                if(user != null){
-                  return <SidebarChat key={index} name={user.name} url={user.photo} online={user.online} uid={user.uid}/>;
-                }
-              }
-            ):<div/>}
+            <this.Items/>
           </div>
       </div>
   );
