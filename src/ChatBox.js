@@ -4,7 +4,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { IconButton} from '@material-ui/core';
+import { IconButton,Menu,MenuItem} from '@material-ui/core';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import MicIcon from '@material-ui/icons/Mic';
 import SendIcon from '@material-ui/icons/Send';
@@ -14,15 +14,17 @@ import { animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
 import {
     useParams
   } from "react-router-dom";
-import { getProfile } from './save';
+import { getProfile} from './save';
 import { useCollectionData,useDocumentData} from 'react-firebase-hooks/firestore';
 const ChatBox=()=> {
      let user = getProfile();
      let {uid} = useParams();
      uid = uid.split("_");
      uid[0] === user.uid ? uid = uid[1]:uid = uid[0];
+     
      const [textFieldText,setText] = useState("");
      let chat = null;
+     const [timestamp,setTime] = useState("10/10/2020")
      const [reciever,load,err] = useDocumentData(db
         .doc("users/"+uid),)
 
@@ -45,7 +47,7 @@ const ChatBox=()=> {
      const [chats,loading,error] = useCollectionData(
          
         chat ? db.collection("chats").doc(chat.chatId)
-        .collection("chats").orderBy("time","desc").limit(100):null,{snapshotListenOptions:{includeMetadataChanges:true}}
+        .collection("chats").where("time",">",timestamp).orderBy("time","desc").limit(100):null,{snapshotListenOptions:{includeMetadataChanges:true}}
     )
    
 
@@ -81,6 +83,35 @@ const ChatBox=()=> {
      const changeText = (e) => {
         setText(e.target.value);
      }
+     const Options = () => {
+        const [anchorEl, setAnchorEl] = React.useState(null);
+      
+        const handleClick = (event) => {
+          setAnchorEl(event.currentTarget);
+        };
+      
+        const handleClose = () => {
+            chats ? setTime(chats.reverse().pop().time):null;
+            setAnchorEl(null);
+        };
+      
+        return (
+          <div>
+            <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+              <MoreVertIcon/>
+            </IconButton>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Clear Chat</MenuItem>
+            </Menu>
+          </div>
+        );
+      }
 
 
         return (
@@ -95,15 +126,8 @@ const ChatBox=()=> {
                         </div>
                     
                     <div className="chat_right_icons">
-                        <IconButton>
-                            <SearchIcon/>
-                        </IconButton>
-                        <IconButton>
-                            <AttachFileIcon/>
-                        </IconButton>
-                        <IconButton>
-                            <MoreVertIcon/>
-                        </IconButton>
+                       
+                        <Options/>
                        
                     </div>
                     </div>
@@ -126,9 +150,6 @@ const ChatBox=()=> {
                     
                 </div>
                 <div className="chat_footer">
-                <IconButton>
-                    <InsertEmoticonIcon style={{color:"#c4c4c4"}}/>
-                </IconButton>
                     <div className="sent">
                         <input value={textFieldText} onChange={changeText}  id="chatbox" type="text" />
                         <IconButton  onClick={sentClicked}>
@@ -139,9 +160,6 @@ const ChatBox=()=> {
                     
                     </div>
                     
-                    <IconButton>
-                    <MicIcon style={{color:"#c4c4c4"}}/>
-                    </IconButton>
                     
                 </div>
             </div>
