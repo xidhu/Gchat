@@ -1,16 +1,11 @@
-import React,{useEffect,useState} from 'react';
+import React,{useState} from 'react';
 import "./Chatbox.css";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import SearchIcon from '@material-ui/icons/Search';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { IconButton,Menu,MenuItem} from '@material-ui/core';
-import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
-import MicIcon from '@material-ui/icons/Mic';
 import SendIcon from '@material-ui/icons/Send';
 import db from "./firebase";
 import ChatMassege from './ChatMessage';
-import { animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
 import {
     useParams
   } from "react-router-dom";
@@ -25,7 +20,7 @@ const ChatBox=()=> {
      const [textFieldText,setText] = useState("");
      let chat = null;
      const [timestamp,setTime] = useState("10/10/2020")
-     const [reciever,load,err] = useDocumentData(db
+     const [reciever] = useDocumentData(db
         .doc("users/"+uid),)
 
      if(user.uid < uid){
@@ -44,7 +39,7 @@ const ChatBox=()=> {
         chat = chate;
     }
     
-     const [chats,loading,error] = useCollectionData(
+     const [chats] = useCollectionData(
          
         chat ? db.collection("chats").doc(chat.chatId)
         .collection("chats").where("time",">",timestamp).orderBy("time","desc").limit(100):null,{snapshotListenOptions:{includeMetadataChanges:true}}

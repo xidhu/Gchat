@@ -2,9 +2,7 @@ import React from 'react';
 import "./Chatbox.css";
 
 class ChatMessage extends React.Component {
-    constructor(props){
-        super(props);
-    }
+    
 
 
     render(){
