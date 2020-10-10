@@ -195,7 +195,9 @@ class Sidebar extends React.Component {
             photo : this.state.user.photo,
             state: "loggedOut",
             online : false,
-        },{merge : true});
+        },{merge : true}).then((result) =>{
+          window.location.href = "/";
+        });
           signOut();
           clearProfile();
           
