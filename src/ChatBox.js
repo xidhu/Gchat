@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import "./Chatbox.css";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -15,11 +15,12 @@ const ChatBox=()=> {
      let user = getProfile();
      let {uid} = useParams();
      uid = uid.split("_");
+     let val = null;
      uid[0] === user.uid ? uid = uid[1]:uid = uid[0];
-     
+     let chatId = user.uid > uid ?user.uid+"_"+uid:uid+"_"+user.uid;
      const [textFieldText,setText] = useState("");
      let chat = null;
-     const [timestamp,setTime] = useState("10/10/2020")
+     
      const [reciever] = useDocumentData(db
         .doc("users/"+uid),)
 
@@ -29,6 +30,20 @@ const ChatBox=()=> {
             .doc("chats/"+uid+"_"+user.uid)
             )
         chat = chate;
+        if(chat){
+            try{
+                
+        Object.keys(chat).forEach((key) =>{
+            if(key === user.uid){
+                val = chat[key];
+            }
+        })
+        
+            }
+            catch(e){
+
+            }
+        }
             
     }
     else{
@@ -37,19 +52,36 @@ const ChatBox=()=> {
         .doc("chats/"+user.uid+"_"+uid)
         )
         chat = chate;
+       if(chat){
+            try{
+                 
+        Object.keys(chat).forEach((key) =>{
+            if(key === user.uid){
+                val = chat[key];
+            }
+        })
+        
+            }
+            catch(e){
+                
+            }
+        }
     }
+
     
+   
      const [chats] = useCollectionData(
          
         chat ? db.collection("chats").doc(chat.chatId)
-        .collection("chats").where("time",">",timestamp).orderBy("time","desc").limit(100):null,{snapshotListenOptions:{includeMetadataChanges:true}}
+        .collection("chats").where("time",">",val?val:"0").orderBy("time","desc").limit(100):null,{snapshotListenOptions:{includeMetadataChanges:true}}
     )
-   
+        
+    
 
      const sentClicked = () => {
         if(textFieldText !== ""){
             if(!chats){
-                let chatId = user.uid > uid ?user.uid+"_"+uid:uid+"_"+user.uid;
+                
                 db
                     .doc("chats/"+chatId)
                     .set({
@@ -87,9 +119,22 @@ const ChatBox=()=> {
       
         const handleClose = (e) => {
             if(e.id === "clr"){
-            chats ? setTime(chats.reverse().pop().time):null;
+             if(chats && chats !== null){
+                let t = chats.reverse().pop().time;
+                db
+                .collection("chats")
+                .doc(chatId)
+                .set({
+                    [user.uid] : t ,
+                },{merge:true}).then((r) =>{
+                    
+                    setAnchorEl(null);
+                    
+                    
+                })
             }
-            setAnchorEl(null);
+            }
+            
         };
       
         return (
@@ -104,7 +149,7 @@ const ChatBox=()=> {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem id="clr" onClick={handleClose}>Clear Chat</MenuItem>
+              <MenuItem id="clr" onClick={(e) =>{handleClose(e.target)}}>Clear Chat</MenuItem>
             </Menu>
           </div>
         );
@@ -148,7 +193,11 @@ const ChatBox=()=> {
                 </div>
                 <div className="chat_footer">
                     <div className="sent">
-                        <input value={textFieldText} onChange={changeText}  id="chatbox" type="text" />
+                        <input value={textFieldText} onChange={changeText} onKeyPress={(event) => {
+    if (event.key === "Enter") {
+      sentClicked()
+    }
+  }}  id="chatbox" type="text" />
                         <IconButton  onClick={sentClicked}>
                             <SendIcon style={{color:"#c4c4c4"}}/>
                         </IconButton>

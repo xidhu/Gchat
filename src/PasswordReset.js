@@ -60,13 +60,13 @@ class PasswordReset extends React.Component{
                 <ArrowBackIcon style={{fontSize : "36px"}} className="bk"/>
             </IconButton>
               </Link>
-              <p className="reset_chat_text">Password Reset</p>
               <div className="reset_input_fields">
+              <p className="reset_chat_text">Password Reset</p>
                 <Input className="reset_input" placeholder="Enter Registered Email" type="email"
                 onChange={(e) => {this.hasChanged(e.target)}} error={this.state.em_err}/>
                 
                 <Button className="reset_button" onClick={this.resetClicked}>Reset</Button>
-                <p className="reset_text">©Galexy inc 2020,All Rights Reserved</p>
+                <p className="reset_text">©Xidhu 2020,All Rights Reserved</p>
                 
               </div>
                

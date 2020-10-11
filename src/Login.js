@@ -78,10 +78,10 @@ class Login extends React.Component{
       <div className="login">
           <div className="login_body">
               
-              
-              <div className="input_fields">
-                <p className="chat_text">GChat</p>
+          <p className="chat_text">GChat</p>
                 <p className="login_text">Login</p>
+              <div className="input_fields">
+                
                 <Input className="login_input" type="email" placeholder="Email" onChange={(e) => {this.hasChanged(e.target)}} error={this.state.em_err}/>
                 <Input className="login_input" type="password" placeholder="Password" onChange={(e) => {this.hasChanged(e.target)}} error={this.state.pass_err}/> 
                 <Button className="login_button" onClick={this.loginClicked}>Login</Button>
@@ -89,7 +89,7 @@ class Login extends React.Component{
                 <span className="signup_text">Don't You Have An account? 
                 <Link to="/signup">Sign Up Now</Link>
                 </span>
-                <p className="signup_text">©Galexy inc 2020,All Rights Reserved</p>
+                <p className="copy">©Xidhu 2020,All Rights Reserved</p>
                 
               </div>
                

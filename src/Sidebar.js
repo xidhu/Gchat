@@ -199,9 +199,10 @@ class Sidebar extends React.Component {
             online : false,
         },{merge : true}).then((result) =>{
           this.setState({redirect:true})
-        });
           signOut();
           clearProfile();
+        });
+          
           
           
       }

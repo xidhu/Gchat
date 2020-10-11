@@ -121,7 +121,7 @@ class SignUp extends Component{
                 <Input error={this.state.pass_err} onChange={(e) => this.hasChanged(e.target)} className="signup_input" placeholder="Password" type="password"/> 
                 <Input error={this.state.pass_con_err} onChange={(e) => this.hasChanged(e.target)} className="signup_input" placeholder="Confirm password" type="password"/> 
                 <Button className="signup_button" onClick={this.signUpPressed} >Sign Up</Button>
-                <p className="signup_text">©Galexy inc 2020,All Rights Reserved</p>
+                <p className="signup_text">©Xidhu 2020,All Rights Reserved</p>
                 
               </div>
                

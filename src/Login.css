@@ -1,7 +1,8 @@
 .login{
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
     height: 100vh;
+    align-items: center;
     background-image: url("./images/3893871.jpg");
     background-size: cover;
     
@@ -9,13 +10,16 @@
   }
   
   .login_body{
-    display: block;
+    margin-top: 3vh;
+    flex: 0.95;
+    display: flex;
+    flex-direction: column;
     background-image: url("./images/619.jpg");
     background-size: cover;
     width: 90vw;
     height: 90vh;
     box-shadow: -1px 4px 20px -6px ;
-    position: relative;
+    overflow: scroll;
    
   }
 
@@ -34,7 +38,7 @@
 
     font-size: 30px;
     text-align: center;
-    margin-top: 10vh;
+    margin-top: 6vh;
     margin-bottom: 6vh;
 
   }
@@ -48,11 +52,11 @@
   }
 
   .input_fields{
-    display: grid;
-    position: absolute;
-    top: 48%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
     padding: 20px;
     
     
@@ -62,5 +66,13 @@
   display: inline;
   font-size: x-small;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 1vh;
+}
+.copy{
+  color: black;
+  display: block;
+  font-size: x-small;
+  text-align: center;
+  margin-top: 2vh;
+  
 }
