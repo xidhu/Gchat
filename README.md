@@ -4,9 +4,7 @@
 
 > A Simple Web Chating Application
 
-Browser support includes Google Chrome, Mozilla Firefox, Safari and other sane browsers
-
- and **IE6+**. <sub>_(Granted you polyfill the functional `Array` methods in ES5)_</sub>
+Browser support includes Google Chrome, Mozilla Firefox, Safari and other sane browsers and **IE6+**. <sub>_(Granted you polyfill the functional `Array` methods in ES5)_</sub>
 
 Framework support includes JavaScript and React.
 
