@@ -6,19 +6,21 @@ import {SearchOutlined} from '@material-ui/icons';
 import {signOut} from "./Authentication";
 import db from "./firebase";
 import {getProfile,clearProfile} from './save';
+import {Redirect} from "react-router-dom";
 import SidebarChat from "./SidebarChat";
 
 
 class Sidebar extends React.Component {
 
-
+  
   constructor(){
     super();
     this.state = {
-
+      
       user : getProfile(),
       users : null,
       items : null,
+      redirect : false,
 
     }
     this.initUser();
@@ -196,10 +198,11 @@ class Sidebar extends React.Component {
             state: "loggedOut",
             online : false,
         },{merge : true}).then((result) =>{
-          window.location.href = "/";
+          this.setState({redirect:true})
         });
           signOut();
           clearProfile();
+          
           
       }
       setAnchorEl(null);
@@ -218,6 +221,7 @@ class Sidebar extends React.Component {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
+          
           <MenuItem id="logout" onClick={(e) => {handleClose(e.target)}}>Logout</MenuItem>
         </Menu>
       </div>
@@ -262,7 +266,7 @@ class Sidebar extends React.Component {
 
   render(){
     
-    return (   
+    return !this.state.redirect ? (   
       <div className="sidebar">
           <div className="sidebar_header">
               <img className="profile_pic"  width="50px" height="50px" src={"https://eshendetesia.com/images/user-profile.png"}/>
@@ -286,7 +290,7 @@ class Sidebar extends React.Component {
             <this.Items/>
           </div>
       </div>
-  );
+  ):<Redirect to="/" />;
   }
   
   

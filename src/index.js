@@ -5,6 +5,8 @@ import './PasswordReset.css'
 import {Button} from '@material-ui/core';
 import './index.css';
 
+
+document.title = "GChat"
 try{
   var online = navigator.onLine;
   localStorage.getItem("");

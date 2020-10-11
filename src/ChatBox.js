@@ -85,8 +85,10 @@ const ChatBox=()=> {
           setAnchorEl(event.currentTarget);
         };
       
-        const handleClose = () => {
+        const handleClose = (e) => {
+            if(e.id === "clr"){
             chats ? setTime(chats.reverse().pop().time):null;
+            }
             setAnchorEl(null);
         };
       
@@ -102,7 +104,7 @@ const ChatBox=()=> {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Clear Chat</MenuItem>
+              <MenuItem id="clr" onClick={handleClose}>Clear Chat</MenuItem>
             </Menu>
           </div>
         );
