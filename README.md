@@ -36,6 +36,8 @@ $npm run-script build
 *the builded app will be on {parent_directory}/build*
 
 **Installing Npm**
+
+
 *In Windows:*
 
 [Click Here][4]
