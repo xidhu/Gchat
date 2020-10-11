@@ -128,13 +128,13 @@ const ChatBox=()=> {
                     [user.uid] : t ,
                 },{merge:true}).then((r) =>{
                     
-                    setAnchorEl(null);
+                    
                     
                     
                 })
             }
             }
-            
+            setAnchorEl(null);
         };
       
         return (

@@ -198,9 +198,11 @@ class Sidebar extends React.Component {
             state: "loggedOut",
             online : false,
         },{merge : true}).then((result) =>{
-          this.setState({redirect:true})
+          setAnchorEl(null);
           signOut();
           clearProfile();
+          this.setState({redirect:true});
+
         });
           
           
