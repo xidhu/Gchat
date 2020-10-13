@@ -89,7 +89,7 @@ MIT
 [2]: https://firebase.google.com
 [3]: https://chat3-f8994.web.app
 [4]: https://nodejs.org/en/download
-[5]: https://github.com/xidhu/Gchat
+[5]: https://github.com/xidhu/Gchat/blob/master/contribute.md
 [6]: https://github.com/xidhu/Gchat/issues
 
 
