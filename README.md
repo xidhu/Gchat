@@ -1,3 +1,4 @@
+
 ## Gchat
 *Simple Chat Application*
 
@@ -14,9 +15,8 @@ Framework support includes JavaScript and React.
 
 # Hosted In Firebase
 
-[Click Here ][3]
 
-Try out the [Gchat][3]!
+<span>Try out the [Gchat][3]<img src="https://lh3.googleusercontent.com/proxy/eNsgHysnkCFbs6u_l3ZWSoPppznXlbAYaTCDE50pMSAzQxta7_rGPAiOLUFrsOH3DGrUhd3w5abi-AZVqycFKVgi6cpt" width=80></span>
 
 
 
