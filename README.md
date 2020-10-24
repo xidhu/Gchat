@@ -16,7 +16,7 @@ Framework support includes JavaScript and React.
 # Try Out
 
 
-<span>Try out the [Gchat][3]<img src="https://lh3.googleusercontent.com/proxy/eNsgHysnkCFbs6u_l3ZWSoPppznXlbAYaTCDE50pMSAzQxta7_rGPAiOLUFrsOH3DGrUhd3w5abi-AZVqycFKVgi6cpt" width=80></span>
+<span>Try out the [Gchat][3] <img src="https://raw.githubusercontent.com/xidhu/Gchat/master/src/images/sticker_pointing_hand_4.gif" width=80></span>
 
 
 
