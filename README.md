@@ -55,24 +55,6 @@ $npm install -g create-react-app
 
 ```
 
-
-# Screens
-**Login**
--
-
-![enter image description here](https://raw.githubusercontent.com/xidhu/Gchat/master/config/a.png)
-
-**SignUp**
--
-![enter image description here](https://github.com/xidhu/Gchat/blob/master/config/c.png?raw=true)
-
-**Forgot Password**
--
-![enter image description here](https://github.com/xidhu/Gchat/blob/master/config/b.png?raw=true)
-
-**Chat Page**
--
-![enter image description here](https://github.com/xidhu/Gchat/blob/master/config/d.png?raw=true)
 # Contributing
 
 See [contributing.markdown][5] for details.
