@@ -13,10 +13,10 @@ Framework support includes JavaScript and React.
 - Official [Firebase][2] for Database
 
 
-# Hosted In Firebase
+# Try Out
 
 
-<span>Try out the [Gchat][3]<img src="https://lh3.googleusercontent.com/proxy/eNsgHysnkCFbs6u_l3ZWSoPppznXlbAYaTCDE50pMSAzQxta7_rGPAiOLUFrsOH3DGrUhd3w5abi-AZVqycFKVgi6cpt" width=80></span>
+<span>Try out the [Gchat][3] <img src="https://raw.githubusercontent.com/xidhu/Gchat/master/src/images/sticker_pointing_hand_4.gif" width=80></span>
 
 
 
@@ -55,24 +55,6 @@ $npm install -g create-react-app
 
 ```
 
-
-# Screens
-**Login**
--
-
-![enter image description here](https://raw.githubusercontent.com/xidhu/Gchat/master/config/a.png)
-
-**SignUp**
--
-![enter image description here](https://github.com/xidhu/Gchat/blob/master/config/c.png?raw=true)
-
-**Forgot Password**
--
-![enter image description here](https://github.com/xidhu/Gchat/blob/master/config/b.png?raw=true)
-
-**Chat Page**
--
-![enter image description here](https://github.com/xidhu/Gchat/blob/master/config/d.png?raw=true)
 # Contributing
 
 See [contributing.markdown][5] for details.
