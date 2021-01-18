@@ -57,7 +57,7 @@ See [contributing.markdown][5] for details.
 
 # Support
 
-See  the [issue page][6]  for any kind of support.
+See the [issue page][6]  for any kind of support.
 
 # License
 
