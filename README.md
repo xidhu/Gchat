@@ -12,7 +12,7 @@ Browser support includes Google Chrome, Mozilla Firefox, Safari and other sane b
 # Try Out
 
 
-<span>Try out the [Gchat][3] <img src="https://raw.githubusercontent.com/xidhu/Gchat/master/src/images/sticker_pointing_hand_4.gif" width=80></span>
+<span>Try out the [Gchat][3]</span>
 
 
 
