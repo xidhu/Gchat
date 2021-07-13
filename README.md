@@ -12,8 +12,9 @@ Browser support includes Google Chrome, Mozilla Firefox, Safari and other sane b
 # Try Out
 
 
-<span>Try out the [Gchat][3]</span>
+<span>Try out the [Gchat Web][3]</span>
 
+<span>Try out the [Gchat App][7]</span>
 
 
 # Features
@@ -69,5 +70,6 @@ MIT
 [4]: https://nodejs.org/en/download
 [5]: https://github.com/xidhu/xidhu/blob/main/CONTRIBUTING.md
 [6]: https://github.com/xidhu/Gchat/issues
+[7]: https://github.com/xidhu/gchat_app
 
 
