@@ -12,9 +12,9 @@ Browser support includes Google Chrome, Mozilla Firefox, Safari and other sane b
 # Try Out
 
 
-<span>Try out the [Gchat Web][3]</span>
+<span>[Gchat Web][3]</span>
 
-<span>Try out the [Gchat App][7]</span>
+<span>[Gchat App][7]</span>
 
 
 # Features
